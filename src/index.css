@@ -19,11 +19,11 @@
   }
 }
 
-body {
+/* body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 h1,
 h2,
@@ -56,7 +56,6 @@ button {
   cursor: pointer;
   color: inherit;
   background-color: transparent;
-  margin-right: 10px;
 }
 
 img {

@@ -1,71 +1,27 @@
+import SearchBar from "../SearchBar/SearchBar";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import { fetchSearchPhoto } from "../../js/fetch-api";
 import { useEffect, useState } from "react";
 
-import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
-import ContactList from "../ContactList/ContactList";
-
 function App() {
-  // ContactList => Contact
-  const [contacts, setContacts] = useState(() => {
-    const saveContacts = localStorage.getItem("save-contacts");
+  const [photos, setPhotos] = useState([]);
 
-    if (saveContacts !== null) {
-      const parseContacts = JSON.parse(saveContacts);
-      if (parseContacts.length > 0) {
-        return parseContacts;
-      }
+  async function reqestValue(value) {
+    try {
+      const results = await fetchSearchPhoto(value);
+      setPhotos(results);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    return [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ];
-  });
-
-  const addContact = (contact) => {
-    setContacts((prevContact) => {
-      return [...prevContact, contact];
-    });
-  };
-
-  const deleteContact = (contactId) => {
-    setContacts((prevContact) =>
-      prevContact.filter((contacts) => contacts.id !== contactId)
-    );
-  };
-
-  useEffect(() => {
-    localStorage.setItem("save-contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
-  // SearchBox
-  const [filterValue, setFilterValue] = useState("");
-
-  const handleChange = (newValue) => setFilterValue(newValue);
-
-  const handleReset = () => setFilterValue("");
-
-  const filtervisible = contacts.filter(
-    (contact) =>
-      contact.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-      contact.number.includes(filterValue)
-  );
+  useEffect(() => {}, []);
 
   return (
     <>
-      <h1>Phonebook</h1>
+      <SearchBar onSubmit={reqestValue} />
 
-      <ContactForm addContact={addContact} />
-
-      <SearchBox
-        onReset={handleReset}
-        value={filterValue}
-        onChange={handleChange}
-      />
-
-      <ContactList contacts={filtervisible} onClick={deleteContact} />
+      <ImageGallery photos={photos} />
     </>
   );
 }
