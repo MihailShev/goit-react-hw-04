@@ -1,9 +1,14 @@
-// import css from './ImageCard.module.css'
+// import css from "./ImageCard.module.css";
 
-function ImageCard() {
+function ImageCard({
+  photo: {
+    alt_description,
+    urls: { small },
+  },
+}) {
   return (
     <div>
-      <img src="$" alt="" />
+      <img width={300} height={250} src={small} alt={alt_description} />
     </div>
   );
 }
