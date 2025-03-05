@@ -3,7 +3,6 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 function ImageModal({ isOpen, onClose, photo }) {
-  console.log(photo);
   return (
     <>
       <Modal
